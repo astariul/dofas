@@ -1,4 +1,4 @@
-"""Dummy package content for `pytere`."""
+"""Dummy package content for `dofas`."""
 
 
 def is_odd(x: float) -> bool:

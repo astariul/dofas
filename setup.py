@@ -5,27 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
-# # The following code can be used if you have private dependencies. Basically it requires the user to set an
-# # environment variable `GH_PAT` to a Github Personal Access Token (with access to the private repository). If the env
-# # var cannot be found, an error is raised. If it can be found, the private package is installed.
-
-# import os
-
-# try:
-#     gh_pat = os.environ["GH_PAT"]
-# except KeyError as e:
-#     raise RuntimeError("You didn't set the environment variable `GH_PAT`. This is necessary because this package "
-#                        "relies on private package(s), and you need to be authenticated to install these. Please set "
-#                        "`GH_PAT` environment variable to your Personnal Access Token (from Github).") from e
-
-# # Example of specifying private dependencies :
-# reqs = [f"<package_name> @ git+https://{gh_pat}@github.com/<user>/<repo>@<tag>#egg=<package_name>"]
-
-
 reqs = []
 
 extras_require = {
-    "test": ["pytest~=8.0", "pytest-cov~=5.0"],
+    "test": ["pytest~=8.0", "pytest-cov~=6.0"],
     "hook": ["pre-commit~=4.0"],
     "lint": ["ruff~=0.2"],
     "docs": ["mkdocs-material~=9.0", "mkdocstrings[python]~=0.24", "mike~=2.0"],
@@ -36,20 +19,20 @@ extras_require["dev"] = (
 )
 
 setuptools.setup(
-    name="pytere",
+    name="dofas",
     version="1.0.0.dev0",
     author="Nicolas REMOND",
     author_email="remondnicola@gmail.com",
-    description="A Python Template Repository",
+    description="A scraper for Dofus Auction house",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/astariul/pytere",
+    url="https://github.com/astariul/dofas",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.12",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.12",
     install_requires=reqs,
     extras_require=extras_require,
 )

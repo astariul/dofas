@@ -44,7 +44,20 @@ pip install -e .
 
 <h2 align="center">Usage</h2>
 
-TODO
+First of all, you need to extract some template that matches your screen. Take a screenshot of your game, while the Auction House is opened. Save that screenshot somewhere and run :
+
+```
+dofas template --screenshot screenshot_hdv.png --template hdv_template.png --hdv_name "Hôtel de Vente"
+```
+
+Here, we use the screenshot located at `screenshot_hdv.png`. This command will run the OCR on the full screen, and extract a template (saved in `hdv_template.png`) of the name `Hôtel de Vente` (Auction House in French).
+
+> [!NOTE]  
+> We need this template for fast template matching. When the script is running and taking screenshots in real-time, we can't run the OCR on the full screen, it takes way too long. So instead, we run it once, extract the template we need, and later we will use this template for fast matching.
+
+You need to run this step only once (to generate the template).
+
+---
 
 
 <h2 align="center">Contribute</h2>

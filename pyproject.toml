@@ -9,7 +9,7 @@ line-length = 119
 target-version = "py38"
 
 [tool.ruff.lint]
-select = ["C", "D", "E", "F", "I", "W"]
+select = ["C", "E", "F", "I", "W"]
 ignore = ["D205", "D107"]
 
 [tool.ruff.lint.isort]

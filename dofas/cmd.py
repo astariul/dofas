@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from dofas import extract_template_from
+from dofas import Scraper, extract_template_from
 
 
 def cli():
@@ -37,6 +37,17 @@ def cli():
         help="Name of the HDV window to search for.",
     )
 
+    start_parser = subparsers.add_parser("start", help="Start the screen analyzer to extract HDV data.")
+    start_parser.set_defaults(cmd="start")
+    start_parser.add_argument(
+        "--template",
+        "-T",
+        dest="template",
+        type=str,
+        default="hdv_template.png",
+        help="HDV template to use for template matching",
+    )
+
     args = parser.parse_args()
 
     if args.cmd is None:
@@ -44,3 +55,6 @@ def cli():
         sys.exit(1)
     elif args.cmd == "template":
         extract_template_from(args.screenshot, args.template, args.hdv_name)
+    elif args.cmd == "start":
+        s = Scraper(args.template)
+        s.start()

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
-reqs = ["opencv-python~=4.10", "easyocr~=1.7"]
+reqs = ["opencv-python~=4.10", "easyocr~=1.7", "mss~=10.0"]
 
 extras_require = {
     "test": ["pytest~=8.0", "pytest-cov~=6.0"],

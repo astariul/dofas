@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
-reqs = []
+reqs = ["opencv-python~=4.10", "easyocr~=1.7"]
 
 extras_require = {
     "test": ["pytest~=8.0", "pytest-cov~=6.0"],
@@ -35,4 +35,9 @@ setuptools.setup(
     python_requires=">=3.12",
     install_requires=reqs,
     extras_require=extras_require,
+    entry_points={
+        "console_scripts": [
+            "dofas=dofas.cmd:cli",
+        ],
+    },
 )

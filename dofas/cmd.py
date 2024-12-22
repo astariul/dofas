@@ -1,7 +1,9 @@
 import argparse
 import sys
 
-from dofas import Scraper, extract_template_from
+import cv2
+
+from dofas import Inspector, Scraper, extract_template_from
 
 
 def cli():
@@ -48,6 +50,25 @@ def cli():
         help="HDV template to use for template matching",
     )
 
+    debug_parser = subparsers.add_parser("debug", help="Analyze the given screenshot for debugging.")
+    debug_parser.set_defaults(cmd="debug")
+    debug_parser.add_argument(
+        "--screenshot",
+        "-S",
+        dest="screenshot",
+        type=str,
+        default="screenshot_hdv.png",
+        help="The screenshot to analyze",
+    )
+    debug_parser.add_argument(
+        "--template",
+        "-T",
+        dest="template",
+        type=str,
+        default="hdv_template.png",
+        help="HDV template to use for template matching",
+    )
+
     args = parser.parse_args()
 
     if args.cmd is None:
@@ -58,3 +79,9 @@ def cli():
     elif args.cmd == "start":
         s = Scraper(args.template)
         s.start()
+    elif args.cmd == "debug":
+        scale = 0.5
+        insp = Inspector(cv2.imread(args.screenshot), scale=scale)
+        template = cv2.imread(args.template, cv2.IMREAD_GRAYSCALE)
+        template = cv2.resize(template, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+        insp.show(template)

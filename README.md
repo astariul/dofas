@@ -3,6 +3,9 @@
 A scraper for Dofus Auction house
 </p>
 
+> [!WARNING]  
+> Because this project is not following the CGU of the game, I stopped the development. The project is basically empty at the moment.
+
 <p align="center">
     <a href="https://github.com/astariul/dofas/releases"><img src="https://img.shields.io/github/release/astariul/dofas.svg" alt="GitHub release" /></a>
     <a href="https://github.com/astariul/dofas/actions/workflows/pytest.yaml"><img src="https://github.com/astariul/dofas/actions/workflows/pytest.yaml/badge.svg" alt="Test status" /></a>
@@ -29,7 +32,7 @@ A scraper for Dofus Auction house
 
 **`dofas`** stands for **Dof**us **A**uction house **S**craper.
 
-TODO
+
 
 
 <h2 align="center">Install</h2>

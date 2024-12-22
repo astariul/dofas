@@ -2,7 +2,6 @@ from pathlib import Path
 
 import cv2
 import easyocr
-import numpy as np
 import numpy.typing as npt
 
 
@@ -21,25 +20,34 @@ class Inspector:
     @property
     def gray_img(self):
         if self._gray_img is None:
-            self._gray_img = cv2.cvtColor(self.img, cv2.COLOR_BGR2GRAY)
+            gray_img = cv2.cvtColor(self.img, cv2.COLOR_BGR2GRAY)
+            self._gray_img = cv2.resize(gray_img, None, fx=self.scale, fy=self.scale, interpolation=cv2.INTER_AREA)
         return self._gray_img
 
     @property
     def binary_img(self):
         if self._binary_img is None:
-            _, binary_img = cv2.threshold(self.gray_img, 165, 255, cv2.THRESH_BINARY)
-            self._binary_img = cv2.resize(binary_img, None, fx=self.scale, fy=self.scale, interpolation=cv2.INTER_AREA)
+            _, self._binary_img = cv2.threshold(self.gray_img, 165, 255, cv2.THRESH_BINARY)
         return self._binary_img
 
-    def show(self):
-        cv2.imshow("Original image", self.img)
-        cv2.imshow("Grayscale image", self.gray_img)
-        cv2.imshow("Binary image", self.binary_img)
+    def show(self, template: npt.ArrayLike):
+        img = cv2.cvtColor(self.gray_img, cv2.COLOR_GRAY2BGR)
+
+        hdv_pos = self.has_template_on_screen(template)
+        if hdv_pos is not None:
+            cv2.rectangle(img, hdv_pos[0], hdv_pos[1], (0, 0, 255), 1)
+
+        cv2.imshow("img", img)
         cv2.waitKey()
 
-    def has_template_on_screen(self, template: npt.ArrayLike) -> bool:
+    def has_template_on_screen(self, template: npt.ArrayLike) -> tuple[tuple[int, int], tuple[int, int]]:
         result = cv2.matchTemplate(self.binary_img, template, cv2.TM_CCOEFF_NORMED)
-        return np.any(result > 0.8)
+        _, max_val, _, max_loc = cv2.minMaxLoc(result)
+        if max_val > 0.8:
+            w, h = template.shape[::-1]
+            return (max_loc, (max_loc[0] + w, max_loc[1] + h))
+        else:
+            return None
 
 
 def extract_template_from(img_path: str, template_path: str, hdv_name: str):
